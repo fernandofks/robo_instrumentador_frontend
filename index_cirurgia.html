@@ -14,14 +14,16 @@
     <text id="ttt" ></text>
 </body>
 <script>
+
+
     
-    
+    function atualiza_valores(){
     
     fetch('http://0.0.0.0:8000/cirurgia')
     .then(function(res){ return res.json(); })
     .then(function(data){document.getElementById("ttt").innerText = JSON.stringify( data ) })
     
-    
+    }
     function mandar(){
         crm=parseInt(document.getElementById("crm").value)
         cpf=parseInt(document.getElementById("cpf").value)
@@ -29,11 +31,11 @@
         tipo=document.getElementById("tipo").value
         kit=parseInt(document.getElementById("kit").value)
         var payload = {
-  "CRM_Medico": crm,
-  "CPF_Paciente": cpf,
-  "Sala_Hospital": sala,
-  "Tipo_Cirurgia": tipo,
-  "Kit_id":kit
+            "CRM_Medico": crm,
+            "CPF_Paciente": cpf,
+            "Sala_Hospital": sala,
+            "Tipo_Cirurgia": tipo,
+            "Kit_id":kit
 }
     fetch('http://0.0.0.0:8000/add_cirurgia/',
     {
@@ -43,11 +45,10 @@
             'Content-Type': 'application/json'
         }
     })
-    .then(function(res){ return res.json(); }).then(fetch('http://0.0.0.0:8000/cirurgia')
-    .then(function(res){ return res.json(); })
-    .then(function(data){document.getElementById("ttt").innerText = JSON.stringify( data ) }))
+    .then(atualiza_valores())
     }
     
+    atualiza_valores()
     
     
         </script>
