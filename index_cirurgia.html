@@ -19,7 +19,7 @@
     
     function atualiza_valores(){
     
-    fetch('http://0.0.0.0:8000/cirurgia')
+    fetch('https://robo-instrumentador-backend-render.onrender.com/cirurgia')
     .then(function(res){ return res.json(); })
     .then(function(data){document.getElementById("ttt").innerText = JSON.stringify( data ) })
     
@@ -37,7 +37,7 @@
             "Tipo_Cirurgia": tipo,
             "Kit_id":kit
 }
-    fetch('http://0.0.0.0:8000/add_cirurgia/',
+    fetch('https://robo-instrumentador-backend-render.onrender.com/add_cirurgia/',
     {
         method: "POST",
         body: JSON.stringify(payload),

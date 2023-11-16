@@ -5,25 +5,27 @@
 <body>
    
     <h1></h1>
-    <input type="text" name="oi" id="iii" ></input>
+    <input type="text" name="oi" id="nome_instrumento" placeholder="nome_instrumento"></input>
     <button onclick="mandar()"> mandar </button>
     <text id="ttt" ></text>
 </body>
 <script>
+
+
     
+    function atualiza_valores(){
     
-    
-    fetch('http://0.0.0.0:8000/kit')
+    fetch('https://robo-instrumentador-backend-render.onrender.com/kit')
     .then(function(res){ return res.json(); })
     .then(function(data){document.getElementById("ttt").innerText = JSON.stringify( data ) })
     
-    
-    function mandar(){
-        valor=document.getElementById("iii").value
-        var payload = {
-      "nome_instrumento": valor
     }
-    fetch('http://0.0.0.0:8000/add_kit/',
+    function mandar(){
+        nome_instrumento=document.getElementById("nome_instrumento").value
+        var payload = {
+            "nome_instrumento":nome_instrumento
+}
+    fetch('https://robo-instrumentador-backend-render.onrender.com/add_kit/',
     {
         method: "POST",
         body: JSON.stringify(payload),
@@ -31,11 +33,10 @@
             'Content-Type': 'application/json'
         }
     })
-    .then(function(res){ return res.json(); }).then(fetch('http://0.0.0.0:8000/kit')
-    .then(function(res){ return res.json(); })
-    .then(function(data){document.getElementById("ttt").innerText = JSON.stringify( data ) }))
+    .then(atualiza_valores())
     }
     
+    atualiza_valores()
     
     
         </script>
