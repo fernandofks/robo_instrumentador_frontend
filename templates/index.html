@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Textbox Example</title>
+</head>
+<body>
+    <h1>Hello, World!</h1>
+    
+    <form method="post" action="/">
+        <label for="user_input">Enter text:</label>
+        <input type="text" id="user_input" name="user_input" required>
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>
+
+<!--This HTML file includes a form with a textbox (user_input) and a submit button. 
+When the form is submitted, it sends a POST request to the same route ('/'), and 
+the entered text is retrieved in the Flask route.
+
+With these changes, when you run your Flask app and go to http://127.0.0.1:5000/, 
+you'll see a simple web page with a textbox and a send button. When you enter text 
+and click "Send," the entered text will be displayed on the page.-->
