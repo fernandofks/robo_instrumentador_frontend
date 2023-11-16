@@ -5,9 +5,9 @@ import paho.mqtt.client as mqtt_client
 broker = "aspvpxjmfalxx-ats.iot.us-east-1.amazonaws.com"
 port = 443
 topic = "gi/mandando/dados"
-client_id = f'Giovanni'
+client_id = f'Fernando'
 
-ca = "certs/AmazonRootCA1.pem" 
+ca = "certs/AmazonRootCA1.pem"
 cert = "certs/6f963f6ec45fbc59ebb98cf9df943424944b334aec0a18ce0f2e7f5d256530c9-certificate.pem.crt"
 private = "certs/6f963f6ec45fbc59ebb98cf9df943424944b334aec0a18ce0f2e7f5d256530c9-private.pem.key"
 
