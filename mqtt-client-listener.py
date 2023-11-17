@@ -36,21 +36,6 @@ def connect():
     client.on_connect = on_connect
     client.connect(broker, port)
     return client
-
-def publish(client):
-    msg_count = 1
-    while True:
-        time.sleep(1)
-        msg = f"messages: {msg_count}"
-        result = client.publish(topic, msg,0)
-        status = result[0]
-        if status == 0:
-            print(f"Send `{msg}` to topic `{topic}`")
-        else:
-            print(f"Failed to send message to topic {topic}")
-        msg_count += 1
-        if msg_count > 30:
-            break
         
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
