@@ -1,41 +1,54 @@
+var tabela_cirurgias=document.getElementById('tabela_cirurgias');
+var filtro ={}
 
+function atualiza_valores(filtro){
 
-function atualiza_valores(){
+    while (tabela_cirurgias.firstChild) {
+       tabela_cirurgias.removeChild(tabela_cirurgias.firstChild);
+      }
     
     fetch('https://robo-instrumentador-backend-render.onrender.com/cirurgia')
     .then(function(res){ return res.json(); })
-    .then(function(data){data.sort(compareById=(a, b)=>{
-        return a.id - b.id;
+    .then(function(data){
+        data=data.sort(compareById=(a, b)=>{
+            return a.id - b.id;
+        }
+        )
+
+
+
+        if(!Object.values(filtro).every(item => item == "")){
+        data = ((String(filtro.CRM_Medico) !== "" ) ? data.filter(el => (String(el.CRM_Medico) === String(filtro.CRM_Medico))) : data);
+        data = ((String(filtro.CPF_Paciente) !== "") ? data.filter(el => (String(el.CPF_Paciente) === String(filtro.CPF_Paciente))) : data);
+        data = ((String(filtro.Sala_Hospital) !== "" ) ? data.filter(el => (String(el.Sala_Hospital) === String(filtro.Sala_Hospital))) : data);
+        data = ((String(filtro.Tipo_Cirurgia) !== "" ) ? data.filter(el => (String(el.Tipo_Cirurgia) === String(filtro.Tipo_Cirurgia))) : data);
+        data = ((String(filtro.Kit_id) !== "" ) ? data.filter(el => (String(el.Kit_id) === String(filtro.Kit_id))) : data);
+        }
+        data.forEach(element => {
+            var elemento = document.createElement('div');
+            var crm = document.createElement('p')
+            var cpf = document.createElement('p')
+            var sala = document.createElement('p')
+            var tipo = document.createElement('p')
+            var kit = document.createElement('p')
+            crm.textContent="CRM: "+element.CRM_Medico
+            cpf.textContent="CPF: "+element.CPF_Paciente
+            sala.textContent="Sala: "+element.Sala_Hospital
+            tipo.textContent="Tipo de Cirurgia: "+element.Tipo_Cirurgia
+            kit.textContent="Kit: "+ element.Kit_id
+            elemento.appendChild(crm)
+            elemento.appendChild(cpf)
+            elemento.appendChild(sala)
+            elemento.appendChild(tipo)
+            elemento.appendChild(kit)
+            elemento.className = "cirurgia"
+            tabela_cirurgias.appendChild(elemento);
+            
+        }
+        
+        );
     }
     )
-    var tabela_cirurgias=document.getElementById('tabela_cirurgias');
-    
-    data.forEach(element => {
-        var elemento = document.createElement('div');
-        var crm = document.createElement('p')
-        var cpf = document.createElement('p')
-        var sala = document.createElement('p')
-        var tipo = document.createElement('p')
-        var kit = document.createElement('p')
-        crm.textContent="CRM: "+element.CRM_Medico
-        cpf.textContent="CPF: "+element.CPF_Paciente
-        sala.textContent="Sala: "+element.Sala_Hospital
-        tipo.textContent="Tipo de Cirurgia: "+element.Tipo_Cirurgia
-        kit.textContent="Kit: "+ element.Kit_id
-        elemento.appendChild(crm)
-        elemento.appendChild(cpf)
-        elemento.appendChild(sala)
-        elemento.appendChild(tipo)
-        elemento.appendChild(kit)
-        elemento.className = "cirurgia"
-        tabela_cirurgias.appendChild(elemento);
-        
-        
-    }
-    
-    );
-}
-);
 }
 
 function mandar(){
@@ -59,7 +72,26 @@ function mandar(){
             'Content-Type': 'application/json'
         }
     })
-    .then(atualiza_valores())
+    .then(atualiza_valores(filtro))
 }
 
-atualiza_valores()
+
+function filtrar(){
+    
+    crm_filtro=document.getElementById("crm_filtro").value
+    cpf_filtro=document.getElementById("cpf_filtro").value
+    sala_filtro=document.getElementById("sala_filtro").value
+    tipo_filtro=document.getElementById("tipo_filtro").value
+    kit_filtro=document.getElementById("kit_filtro").value
+    var filtro = {
+        CRM_Medico:crm_filtro,
+        CPF_Paciente: cpf_filtro,
+        Sala_Hospital: sala_filtro,
+        Tipo_Cirurgia: tipo_filtro,
+        Kit_id:kit_filtro
+    }
+    atualiza_valores(filtro)
+}
+
+
+atualiza_valores(filtro)
