@@ -69,7 +69,13 @@ function mandar(){
             'Content-Type': 'application/json'
         }
     })
-    .then(atualiza_valores(filtro))
+    .then(atualiza_valores({
+        CRM_Medico:"",
+        CPF_Paciente:"" ,
+        Sala_Hospital: "",
+        Tipo_Cirurgia: "",
+        Kit_id:""
+    }))
 }
 function filtrar(){
     crm_filtro=document.getElementById("crm_filtro").value
