@@ -68,14 +68,19 @@ function mandar(){
         headers: {
             'Content-Type': 'application/json'
         }
-    })
-    .then(atualiza_valores({
-        CRM_Medico:"",
-        CPF_Paciente:"" ,
-        Sala_Hospital: "",
-        Tipo_Cirurgia: "",
-        Kit_id:""
-    }))
+    }).then(function (response){
+        if(response.status===200){
+          atualiza_valores({
+                CRM_Medico:"",
+                CPF_Paciente:"" ,
+                Sala_Hospital: "",
+                Tipo_Cirurgia: "",
+                Kit_id:""
+            })
+        }
+    }).catch(function(error){
+        console.error(error)
+    }) 
 }
 function filtrar(){
     crm_filtro=document.getElementById("crm_filtro").value
