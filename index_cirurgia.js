@@ -1,12 +1,15 @@
 var tabela_cirurgias=document.getElementById('tabela_cirurgias');
-var filtro ={}
-
+var filtro = {
+    CRM_Medico:"",
+    CPF_Paciente:"" ,
+    Sala_Hospital: "",
+    Tipo_Cirurgia: "",
+    Kit_id:""
+}
 function atualiza_valores(filtro){
-
     while (tabela_cirurgias.firstChild) {
-       tabela_cirurgias.removeChild(tabela_cirurgias.firstChild);
-      }
-    
+        tabela_cirurgias.removeChild(tabela_cirurgias.firstChild);
+    }    
     fetch('https://robo-instrumentador-backend-render.onrender.com/cirurgia')
     .then(function(res){ return res.json(); })
     .then(function(data){
@@ -14,15 +17,12 @@ function atualiza_valores(filtro){
             return a.id - b.id;
         }
         )
-
-
-
         if(!Object.values(filtro).every(item => item == "")){
-        data = ((String(filtro.CRM_Medico) !== "" ) ? data.filter(el => (String(el.CRM_Medico) === String(filtro.CRM_Medico))) : data);
-        data = ((String(filtro.CPF_Paciente) !== "") ? data.filter(el => (String(el.CPF_Paciente) === String(filtro.CPF_Paciente))) : data);
-        data = ((String(filtro.Sala_Hospital) !== "" ) ? data.filter(el => (String(el.Sala_Hospital) === String(filtro.Sala_Hospital))) : data);
-        data = ((String(filtro.Tipo_Cirurgia) !== "" ) ? data.filter(el => (String(el.Tipo_Cirurgia) === String(filtro.Tipo_Cirurgia))) : data);
-        data = ((String(filtro.Kit_id) !== "" ) ? data.filter(el => (String(el.Kit_id) === String(filtro.Kit_id))) : data);
+            data = ((String(filtro.CRM_Medico) !== "" ) ? data.filter(el => (String(el.CRM_Medico) === String(filtro.CRM_Medico))) : data);
+            data = ((String(filtro.CPF_Paciente) !== "") ? data.filter(el => (String(el.CPF_Paciente) === String(filtro.CPF_Paciente))) : data);
+            data = ((String(filtro.Sala_Hospital) !== "" ) ? data.filter(el => (String(el.Sala_Hospital) === String(filtro.Sala_Hospital))) : data);
+            data = ((String(filtro.Tipo_Cirurgia) !== "" ) ? data.filter(el => (String(el.Tipo_Cirurgia) === String(filtro.Tipo_Cirurgia))) : data);
+            data = ((String(filtro.Kit_id) !== "" ) ? data.filter(el => (String(el.Kit_id) === String(filtro.Kit_id))) : data);
         }
         data.forEach(element => {
             var elemento = document.createElement('div');
@@ -42,15 +42,12 @@ function atualiza_valores(filtro){
             elemento.appendChild(tipo)
             elemento.appendChild(kit)
             elemento.className = "cirurgia"
-            tabela_cirurgias.appendChild(elemento);
-            
-        }
-        
+            tabela_cirurgias.appendChild(elemento);   
+        }       
         );
     }
     )
 }
-
 function mandar(){
     crm=parseInt(document.getElementById("crm").value)
     cpf=parseInt(document.getElementById("cpf").value)
@@ -74,10 +71,7 @@ function mandar(){
     })
     .then(atualiza_valores(filtro))
 }
-
-
 function filtrar(){
-    
     crm_filtro=document.getElementById("crm_filtro").value
     cpf_filtro=document.getElementById("cpf_filtro").value
     sala_filtro=document.getElementById("sala_filtro").value
@@ -92,6 +86,4 @@ function filtrar(){
     }
     atualiza_valores(filtro)
 }
-
-
 atualiza_valores(filtro)
