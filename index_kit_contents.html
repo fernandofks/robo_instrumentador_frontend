@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>Order Details</title>
+    <link rel="stylesheet" href="index_kit_contents.css">
+    
+</head>
+<body>
+
+    <h1>Lista de Instrumentos</h1>
+
+    <div id="menu">
+        <div class="item" onclick="addToOrder('Bisturi')">Bisturi</div>
+        <div class="item" onclick="addToOrder('Tesoura')">Tesoura</div>
+        <div class="item" onclick="addToOrder('Pinça')"> Pinça</div>
+    </div>
+
+    <h2>Seu pedido</h2>
+    <ul id="orderList"></ul>
+
+    <script src="index_kit_contents.js"></script>
+
+    <button onclick="exportOrder()">Export Order</button>
+    
+</body>
+</html>
