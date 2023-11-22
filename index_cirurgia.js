@@ -31,16 +31,21 @@ function atualiza_valores(filtro){
             var sala = document.createElement('p')
             var tipo = document.createElement('p')
             var kit = document.createElement('p')
+            var botao = document.createElement('button')
+            botao.addEventListener("click", enviar)
             crm.textContent="CRM: "+element.CRM_Medico
             cpf.textContent="CPF: "+element.CPF_Paciente
             sala.textContent="Sala: "+element.Sala_Hospital
             tipo.textContent="Tipo de Cirurgia: "+element.Tipo_Cirurgia
             kit.textContent="Kit: "+ element.Kit_id
+            kit.className="kit"
+
             elemento.appendChild(crm)
             elemento.appendChild(cpf)
             elemento.appendChild(sala)
             elemento.appendChild(tipo)
             elemento.appendChild(kit)
+            elemento.appendChild(botao)
             elemento.className = "cirurgia"
             tabela_cirurgias.appendChild(elemento);   
         }       
@@ -48,6 +53,41 @@ function atualiza_valores(filtro){
     }
     )
 }
+
+function enviar(event){
+
+
+    var clickedElement = event.target.parentElement;
+    var kitId = clickedElement.querySelector('p.kit').textContent.replace('Kit: ', '');
+
+    var conteudo = {
+        kit: kitId
+    };
+
+    fetch('https://robo-instrumentador-backend-render.onrender.com/e/',
+    {
+        method: "POST",
+        body: JSON.stringify(conteudo),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(function (response){
+        if(response.status===200){
+          atualiza_valores({
+                CRM_Medico:"",
+                CPF_Paciente:"" ,
+                Sala_Hospital: "",
+                Tipo_Cirurgia: "",
+                Kit_id:""
+            })
+        }
+    }).catch(function(error){
+        console.error(error)
+    }) 
+} 
+
+
+
 function mandar(){
     crm=parseInt(document.getElementById("crm").value)
     cpf=parseInt(document.getElementById("cpf").value)
